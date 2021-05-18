@@ -1,19 +1,32 @@
+// REACT LIBRARIES
 import React from "react";
 import axios from "axios";
-
 import { Link } from "react-router-dom";
+import { useQuery } from "react-query";
 
-// import Product from "pages/Product";
+// COMPONENTS
+import LoadingSpinner from "../components/LoadingSpinner";
+
+import formatProductPrice from "../utils/formatProductPrice";
 
 export default function ProductList() {
-  const [products, setProducts] = React.useState([]);
+  // =================== REACT-QUERY FETCH METHOS ===============
+  const { data: products, isLoading } = useQuery("Products", () =>
+    axios("/api/products").then((res) => res.data.products)
+  );
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
-  React.useEffect(() => {
-    axios
-      .get("/api/products")
-      .then((res) => res.data.products)
-      .then((products) => setProducts(products));
-  }, []);
+  //================== AXIOS FETCH METHOS =========================
+  // const [products, setProducts] = React.useState([]);
+
+  // React.useEffect(() => {
+  //   axios
+  //     .get("/api/products")
+  //     .then((res) => res.data.products)
+  //     .then((products) => setProducts(products));
+  // }, []);
 
   return products.map((product) => (
     <ProductItem key={product.id} product={product} />
@@ -21,6 +34,8 @@ export default function ProductList() {
 }
 
 function ProductItem({ product }) {
+  const price = formatProductPrice(product);
+
   return (
     <div className="p-4 md:w-1/3">
       <div className="h-full border-2 border-gray-800 rounded-lg overflow-hidden">
@@ -58,7 +73,7 @@ function ProductItem({ product }) {
               </svg>
             </Link>
             <span className="text-gray-500 mr-3 inline-flex items-center lg:ml-auto md:ml-0 ml-auto leading-none text-lg pr-3 py-1 border-gray-800 font-bold">
-              {product.price}
+              {price}
             </span>
           </div>
         </div>
