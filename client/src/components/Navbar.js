@@ -6,7 +6,7 @@ import CheckoutCart from "./CheckoutCart";
 
 export default function Navbar() {
   return (
-    <header className="text-gray-400 bg-gray-900 body-font fixed w-full">
+    <header className="text-gray-400 bg-gray-900 body-font lg:fixed lg:w-full">
       <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
         <Link
           to="/"
