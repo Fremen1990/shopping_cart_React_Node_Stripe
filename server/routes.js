@@ -22,6 +22,8 @@ module.exports = function getRoutes() {
 
   router.post("/checkout-sessions", createCheckoutSession);
 
+  router.get("/checkout-sessions/:sessionId", getCheckoutSession);
+
   return router;
 };
 
@@ -73,6 +75,23 @@ async function createCheckoutSession(req, res) {
     const checkoutSession = await stripe.checkout.sessions.create(params);
 
     res.status(200).json(checkoutSession);
+  } catch (error) {
+    res.status(500).json({ statusCode: 500, message: error.message });
+  }
+}
+
+async function getCheckoutSession(req, res) {
+  const { sessionId } = req.params;
+
+  try {
+    if (!sessionId.startsWith("cs_")) {
+      throw Error("incorrect checkout session id");
+    }
+    const checkout_session = await stripe.checkout.sessions.retrieve(
+      sessionId,
+      { expand: ["payment_intent"] }
+    );
+    res.status(200).json(checkout_session);
   } catch (error) {
     res.status(500).json({ statusCode: 500, message: error.message });
   }
