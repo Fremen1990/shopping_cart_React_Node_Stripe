@@ -14,13 +14,12 @@ export default function CartSummary() {
     <>
       <nav
         onClick={toggleModal}
-        className="md:ml-auto flex flex-wrap items-center text-base justify-center"
+        className="md:ml-auto flex flex-wrap items-center text-base justify-center cursor-pointer"
       >
         <span className="mr-5 hover:text-white flex items-center">
           <CartIcon />
-          <span className="ml-3">
-            My Cart - Total Price: {formattedTotalPrice}{" "}
-          </span>
+          <span className="ml-3">Total Price: {formattedTotalPrice} </span>
+
           <span className="ml-3">Products: {cartCount} </span>
         </span>
       </nav>

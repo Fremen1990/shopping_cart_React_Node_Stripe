@@ -8,6 +8,7 @@ import { useQuery } from "react-query";
 import LoadingSpinner from "../components/LoadingSpinner";
 
 import formatProductPrice from "../utils/formatProductPrice";
+import AddToCart from "./AddToCart";
 
 export default function ProductList() {
   // =================== REACT-QUERY FETCH METHOS ===============
@@ -54,7 +55,7 @@ function ProductItem({ product }) {
             {product.name}
           </h1>
           <p className="leading-relaxed mb-3">{product.description}</p>
-          <div className="flex items-center flex-wrap ">
+          <div className="flex items-center flex-wrap">
             <Link
               to={`/${product.id}`}
               className="text-indigo-400 inline-flex items-center md:mb-2 lg:mb-0"
@@ -75,6 +76,7 @@ function ProductItem({ product }) {
             <span className="text-gray-500 mr-3 inline-flex items-center lg:ml-auto md:ml-0 ml-auto leading-none text-lg pr-3 py-1 border-gray-800 font-bold">
               {price}
             </span>
+            <AddToCart product={product} />
           </div>
         </div>
       </div>
